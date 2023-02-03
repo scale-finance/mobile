@@ -22,11 +22,11 @@ const Login = () => {
     <MainContainer>
       <KeyboardAvoidWrapper>
         <View className="flex flex-row items-center justify-center gap-0 pt-[25%]">
-          <Text className="text-3xl text-[#EFE3C8] font-mono">Secure</Text>
-          <Text className="text-3xl text-[#EFE3C850] font-sans">App</Text>
+          <Text className="text-5xl text-[#EFE3C8] font-mono">Scale</Text>
+          <Text className="text-3xl text-[#EFE3C850] font-sans"></Text>
         </View>
         <View className="flex flex-1 justify-center items-center pt-[20%] px-[25px]">
-          <Text className="text-[#EFE3C8] text-md">
+          <Text className="text-2xl text-[#EFE3C8] text-md">
             Enter your account credentials
           </Text>
           <View className="h-[50px] w-full"></View>
