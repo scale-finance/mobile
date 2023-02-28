@@ -60,7 +60,7 @@ const Register = () => {
           />
 
           <View className="flex w-full justify-end items-end pt-4">
-            <Pressable onPress={() => {}}>
+            <Pressable onPress={() => console.log("clicked already have an account")}>
               <Text className="text-center text-gray-500 text-sm text-[#EFE3C8]">
                 Already have an account? Login here
               </Text>
