@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Pressable } from "react-native";
+import { View, Text, ScrollView, Pressable,Image } from "react-native";
 import React from "react";
 import MainContainer from "../components/Container/MainContainer";
 import KeyboardAvoidWrapper from "../components/Container/KeyboardAvoidWrapper";
@@ -22,41 +22,50 @@ const Login = () => {
     <MainContainer>
       <KeyboardAvoidWrapper>
         <View className="flex flex-row items-center justify-center gap-0 pt-[25%]">
-          <Text className="text-5xl text-[#EFE3C8] font-mono">Scale</Text>
-          <Text className="text-3xl text-[#EFE3C850] font-sans"></Text>
+          <Image source={require('../assets/scale_logo.png')} />
+          {/* <Text className="text-5xl text-[#EFE3C8] font-mono">Scale</Text>  */}
         </View>
-        <View className="flex flex-1 justify-center items-center pt-[20%] px-[25px]">
-          <Text className="text-2xl text-[#EFE3C8] text-md">
-            Enter your account credentials
+        <View className="flex flex-1 justify-center items-center pt-[10%] px-[25px]">
+          <Text className="text-3xl text-[#EFE3C8] text-md">
+            Welcome to Scale
+          </Text>
+          <Text className="text-1xl text-[#EFE3C8] text-md pt-[10%]">
+            New here? Register 
+            <Text className="text-1xl text-[#EFE3C8] text-md ">
+             here
+          </Text>
           </Text>
           <View className="h-[50px] w-full"></View>
           <CustomTextInput
-            icon={<AtSymbolIcon color={"#EFE3C850"} width={35} height={35} />}
+            icon={<AtSymbolIcon color={"#979797"} width={35} height={35} />}
             onChangeText={onUsernameChange}
             label="Email"
             keyboardType={"email-address"}
             placeholder="Enter your email"
           />
           <CustomTextInput
-            icon={<LockClosedIcon color={"#EFE3C850"} width={35} height={35} />}
+            icon={<LockClosedIcon color={"#979797"} width={35} height={35} />}
             onChangeText={onPasswordChange}
             label="Password"
             IsSecureText={true}
             keyboardType="default"
-            placeholder="* * * * * * * *"
+            placeholder="Enter your password"
           />
           <CustomButton
             buttonText="Login"
-            buttonClassNames="w-full rounded-md p-3 bg-[#EFE3C8] flex justify-center items-center mt-5"
-            textClassNames="text-[#4A2B29] text-[18px] font-semibold"
+            buttonClassNames="w-full rounded-md p-3 bg-[#FB5353] flex justify-center items-center mt-5"
+            textClassNames="text-[#EFE3C8] text-[18px] font-semibold"
             onPress={() => console.log(password)}
           />
+          {/** 
           <CustomButton
             buttonText="Register"
             buttonClassNames="w-full rounded-md p-3 bg-transparent flex justify-center items-center mt-3 border-[1px] border-[#EFE3C8] border-solid"
             textClassNames="text-[#EFE3C8] text-[18px] font-semibold"
             onPress={() => console.log(password)}
           />
+          */}
+
           <View className="flex w-full justify-end items-end pt-4">
             <Pressable onPress={() => {}}>
               <Text className="text-center text-gray-500 text-sm">
