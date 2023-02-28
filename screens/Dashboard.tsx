@@ -5,7 +5,7 @@ import DashboardCard from "../components/Cards/DashboardCard";
 import { ArrowDownLeftIcon,UserIcon,ChartBarIcon,ChartPieIcon,} from "react-native-heroicons/solid";
 
 const Dashboard = () => {
-  const [user, setUser] = React.useState<string | null>("Mark");
+  const [user, setUser] = React.useState<string | null>("User");
   return (
     <MainContainer>
       <View className="h-[55px] z-20 mt-8 flex flex-row justify-between items-center px-2">
@@ -13,7 +13,7 @@ const Dashboard = () => {
           <ArrowDownLeftIcon color="white" />
           <Text className="text-white text-xl">Dashboard</Text>
         </View>
-        <View className="w-[40px] h-[40px] bg-[#704341] justify-center items-center rounded-full">
+        <View className="w-[40px] h-[40px] bg-[#FB5353] justify-center items-center rounded-full">
           <UserIcon color="white" />
         </View>
       </View>
@@ -22,17 +22,17 @@ const Dashboard = () => {
         Hello, {user}
       </Text>
       <DashboardCard
-        cardTitle="Balance"
+        cardTitle="Net Worth"
         totalAmount={"$57,000.00"}
-        dateText="07-08-2022"
-        icon={<ChartBarIcon color="#008D96" size={60} />}
+        /*dateText="02-28-2023"*/
+        icon={<ChartBarIcon color="#FB5353" size={60} />}
       />
 
       <DashboardCard
-        cardTitle="Total Savings"
+        cardTitle="Budget"
         totalAmount={"$20,050.02"}
-        dateText="07-08-2022"
-        icon={<ChartPieIcon color="#008D96" size={60} />}
+        /*dateText="02-28-2023"*/
+        icon={<ChartPieIcon color="#FB5353" size={60} />}
       />
     </MainContainer>
   );
