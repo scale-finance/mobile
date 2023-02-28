@@ -5,16 +5,38 @@ import KeyboardAvoidWrapper from "../components/Container/KeyboardAvoidWrapper";
 import CustomTextInput from "../components/InputText/CustomTextInput";
 import { AtSymbolIcon, LockClosedIcon } from "react-native-heroicons/solid";
 import CustomButton from "../components/Buttons/CustomButton";
+import axios from 'axios';
+
+
 
 const Register = () => {
   const [username, setUsername] = React.useState<String | null>(null);
   const [password, setPassword] = React.useState<String | null>(null);
+  const [fullname, setFullname] = React.useState<String | null>(null);
+
+  const createNewUser = () => {
+    axios.post('http://localhost:8080/api/auth/register', {
+      email: username, 
+      password: password,
+      fullname: fullname})
+      .then((response)=>{
+        console.log(response.status);
+        
+    });
+    console.log("debugger");
+  }
+
+
   const onUsernameChange = (username: String) => {
     setUsername(username);
   };
   const onPasswordChange = (password: String) => {
     setPassword(password);
   };
+  const onFullnameChange = (fullname: String) => {
+    setFullname(fullname);
+  };
+
   return (
     <MainContainer>
       <KeyboardAvoidWrapper>
@@ -28,7 +50,7 @@ const Register = () => {
           <View className="h-[30px] w-full"></View>
 
           <CustomTextInput
-            onChangeText={onUsernameChange}
+            onChangeText={onFullnameChange}
             label="Full Name"
             placeholder="Enter your full name"
           />
@@ -56,7 +78,7 @@ const Register = () => {
             buttonText="Register"
             buttonClassNames="w-full rounded-md p-3 bg-[#FB5353] flex justify-center items-center mt-5"
             textClassNames="text-[#EFE3C8] text-[18px] font-semibold"
-            onPress={() => console.log(password)}
+            onPress={() => createNewUser}
           />
 
           <View className="flex w-full justify-end items-end pt-4">

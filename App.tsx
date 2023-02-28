@@ -11,7 +11,7 @@ const App: React.FC = () => {
       <TailwindProvider>
         {/* TailwindProvider */}
         <StatusBar style="light" />
-        <Dashboard />
+        <Register />
       </TailwindProvider>
     </>
   );
