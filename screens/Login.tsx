@@ -30,10 +30,7 @@ const Login = () => {
             Welcome to Scale
           </Text>
           <Text className="text-1xl text-[#EFE3C8] text-md pt-[10%]">
-            New here? Register 
-            <Text className="text-1xl text-[#EFE3C8] text-md ">
-             here
-          </Text>
+            New here? Register here
           </Text>
           <View className="h-[50px] w-full"></View>
           <CustomTextInput
