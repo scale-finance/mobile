@@ -22,7 +22,7 @@ const Register = () => {
       .then((response)=>{
         console.log(response.status);
         
-    });
+    }).catch(err => console.log(err));
     console.log("debugger");
   }
 
@@ -78,7 +78,7 @@ const Register = () => {
             buttonText="Register"
             buttonClassNames="w-full rounded-md p-3 bg-[#FB5353] flex justify-center items-center mt-5"
             textClassNames="text-[#EFE3C8] text-[18px] font-semibold"
-            onPress={() => createNewUser}
+            onPress={() => createNewUser()}
           />
 
           <View className="flex w-full justify-end items-end pt-4">
