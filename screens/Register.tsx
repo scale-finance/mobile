@@ -8,6 +8,13 @@ import KeyboardAvoidWrapper from "../components/Container/KeyboardAvoidWrapper";
 import MainContainer from "../components/Container/MainContainer";
 import CustomTextInput from "../components/InputText/CustomTextInput";
 
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamList} from './RootStackParams';
+
+type registerScreenProp = StackNavigationProp<RootStackParamList, 'Register'>;
+
+
 const Register = () => {
     const [username, setUsername] = React.useState<string | null>(null);
     const [password, setPassword] = React.useState<string | null>(null);
@@ -38,6 +45,8 @@ const Register = () => {
     const onFullnameChange = (fullname: string) => {
         setFullname(fullname);
     };
+
+    const navigation = useNavigation<registerScreenProp>();
 
     return (
         <MainContainer>
@@ -82,7 +91,7 @@ const Register = () => {
                     />
 
                     <View className="flex w-full justify-end items-end pt-4">
-                        <Pressable onPress={() => console.log("clicked already have an account")}>
+                        <Pressable onPress={() => navigation.navigate('Login')}>
                             <Text className="text-center text-gray-500 text-sm text-[#EFE3C8]">
                                 Already have an account? Login here
                             </Text>

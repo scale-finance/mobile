@@ -8,6 +8,12 @@ import KeyboardAvoidWrapper from "../components/Container/KeyboardAvoidWrapper";
 import MainContainer from "../components/Container/MainContainer";
 import CustomTextInput from "../components/InputText/CustomTextInput";
 
+import {useNavigation} from '@react-navigation/native';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RootStackParamList} from './RootStackParams';
+
+type loginScreenProp = StackNavigationProp<RootStackParamList, 'Login'>;
+
 const Login = () => {
     const [email, setEMail] = React.useState<string | null>(null);
     const [password, setPassword] = React.useState<string | null>(null);
@@ -20,6 +26,8 @@ const Login = () => {
         setPassword(password);
     };
 
+    const navigation = useNavigation<loginScreenProp>();
+
     return (
         <MainContainer>
             <KeyboardAvoidWrapper>
@@ -30,7 +38,7 @@ const Login = () => {
                 <View className="flex flex-1 justify-center items-center pt-[10%] px-[25px]">
                     <Text className="text-3xl text-[#EFE3C8] text-md">Welcome to Scale</Text>
                     <Text className="text-1xl text-[#EFE3C8] text-md pt-[5%]">New here?</Text>
-                    <Pressable onPress={() => console.log("pressed register")}>
+                    <Pressable onPress={() => navigation.navigate('Register')}>
                         <Text className="text-1xl text-[#FB5353] text-md pb-[5%]">
                             Register here
                         </Text>
@@ -55,7 +63,7 @@ const Login = () => {
                         buttonText="Login"
                         buttonClassNames="w-full rounded-md p-3 bg-[#FB5353] flex justify-center items-center mt-5"
                         textClassNames="text-[#EFE3C8] text-[18px] font-semibold"
-                        onPress={() => console.log(password)}
+                        onPress={() => navigation.navigate('Dashboard')}
                     />
                     {/** 
           <CustomButton
