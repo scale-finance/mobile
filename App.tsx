@@ -3,6 +3,7 @@ import {StatusBar} from "expo-status-bar";
 import Dashboard from "./screens/Dashboard";
 import Login from "./screens/Login";
 import Register from "./screens/Register";
+import Plaid from "./screens/Plaid";
 import React from "react";
 import {TailwindProvider} from "tailwindcss-react-native";
 import {NavigationContainer} from '@react-navigation/native';
@@ -18,6 +19,7 @@ function MyStack() {
       <Stack.Group>
         <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
         <Stack.Screen name="Dashboard" component={Dashboard} options={{ headerShown: false }}/>
+        <Stack.Screen name="Plaid" component={Plaid} options={{ headerShown: false }}/>
       </Stack.Group>
       <Stack.Group screenOptions={{ cardStyleInterpolator: CardStyleInterpolators. forVerticalIOS, headerShown: false }}>
         <Stack.Screen name="Register" component={Register} />
