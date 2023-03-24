@@ -1,5 +1,6 @@
 import axios from "axios";
 import React from "react";
+import Constants from "expo-constants";
 import { View, Text, ScrollView, Pressable, Image } from "react-native";
 import { AtSymbolIcon, LockClosedIcon } from "react-native-heroicons/solid";
 
@@ -17,6 +18,23 @@ type loginScreenProp = StackNavigationProp<RootStackParamList, 'Login'>;
 const Login = () => {
     const [email, setEMail] = React.useState<string | null>(null);
     const [password, setPassword] = React.useState<string | null>(null);
+
+    const authenticateUser = () => {
+        axios
+            .post(`${Constants.manifest!.extra!.backendUri}/api/auth/login`, {
+                email: email,
+                password: password,
+            })
+            .then((response) => {
+                if(response.data.status == 200){
+                    navigation.navigate('Dashboard');
+                };
+                // TODO: 
+                //else {display error message in a window}
+            })
+            .catch((err) => console.log(err.response.data));
+        console.log("debugger");
+    };
 
     const onUsernameChange = (email: string) => {
         setEMail(email);
@@ -63,7 +81,7 @@ const Login = () => {
                         buttonText="Login"
                         buttonClassNames="w-full rounded-md p-3 bg-[#FB5353] flex justify-center items-center mt-5"
                         textClassNames="text-[#EFE3C8] text-[18px] font-semibold"
-                        onPress={() => navigation.navigate('Dashboard')}
+                        onPress={() => authenticateUser()}
                     />
                     {/** 
           <CustomButton
