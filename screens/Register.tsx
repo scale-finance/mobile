@@ -28,14 +28,15 @@ const Register = () => {
                 fullName: fullname,
             })
             .then((response) => {
+                //console.log(response.data)
                 if(response.data.status == 201){
-                    navigation.navigate('Dashboard');
+                    navigation.navigate('Plaid');
                 };
                 // TODO: 
                 //else {display error message in a window}
             })
             .catch((err) => console.log(err.response.data));
-        console.log("debugger");
+        //console.log("debugger");
     };
 
     const onUsernameChange = (username: string) => {
