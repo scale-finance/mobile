@@ -16,10 +16,13 @@ import PlaidLink from '@burstware/expo-plaid-link'
 import MainContainer from "../components/Container/MainContainer";
 
 const Plaid = () => {
-    const [user, setUser] = React.useState<string | null>("User");
+    //const [isLoading, setLoading] = React.useState(true);
     const [linkToken, setLinkToken] = React.useState<string | 'null'>("linkToken");
 
-   
+    useEffect(() => {
+        getLinkToken();
+    }, [])
+
     const getLinkToken = () => {
         axios
             .get(`${Constants.manifest!.extra!.backendUri}/api/v0/plaid/link-token/create`, {
@@ -31,8 +34,9 @@ const Plaid = () => {
             .catch((err) => console.log(err.response.data));
     }
 
-    getLinkToken(); 
+
     console.log(linkToken);
+
 
     return (
         
@@ -43,6 +47,7 @@ const Plaid = () => {
             onEvent={console.log("event")}
             onExit={console.log("exit")}
             onSuccess={console.log("success.publicToken")}
+            onError={console.log("error")}
              />
         </MainContainer>
     );
