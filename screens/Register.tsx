@@ -36,7 +36,7 @@ const Register = () => {
                 //else {display error message in a window}
             })
             .catch((err) => console.log(err.response.data));
-        console.log("debugger");
+        //console.log("debugger");
     };
 
     const onUsernameChange = (username: string) => {

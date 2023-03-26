@@ -9,32 +9,46 @@ import {
     ChartPieIcon,
 } from "react-native-heroicons/solid";
 
-import { PlaidLink, LinkSuccess, LinkExit } from 'react-native-plaid-link-sdk'
-//import { Modal } from '../layout'
+// @ts-expect-error
+import PlaidLink from '@burstware/expo-plaid-link'
+
 
 import MainContainer from "../components/Container/MainContainer";
 
 const Plaid = () => {
-    const [user, setUser] = React.useState<string | null>("User");
+    //const [isLoading, setLoading] = React.useState(true);
     const [linkToken, setLinkToken] = React.useState<string | 'null'>("linkToken");
 
-    axios
+    useEffect(() => {
+        getLinkToken();
+    }, [])
+
+    const getLinkToken = () => {
+        axios
             .get(`${Constants.manifest!.extra!.backendUri}/api/v0/plaid/link-token/create`, {
             })
             .then((response) => {
-                console.log(response.data.data)
-                setLinkToken(response.data.data.linkToken)
+                //console.log(response.data.data)
+                setLinkToken(response.data.data.link_token)
             })
-            
+            .catch((err) => console.log(err.response.data));
+    }
+
+
+    console.log(linkToken);
+
+
     return (
+        
         <MainContainer>
+            
             <PlaidLink
-                tokenConfig={{token: linkToken, noLoadingState: false }}
-                onSuccess={(success: LinkSuccess) => console.log(success)}
-                onExit={(exit: LinkExit) => console.log(exit)}
-            >
-            <Text>Add Account</Text>
-            </PlaidLink>
+            linkToken={linkToken}
+            onEvent={console.log("event")}
+            onExit={console.log("exit")}
+            onSuccess={console.log("success.publicToken")}
+            onError={console.log("error")}
+             />
         </MainContainer>
     );
 };
