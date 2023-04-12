@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Dimensions } from "react-native";
+import { View, Text } from "react-native";
 import {
     ArrowDownLeftIcon,
     UserIcon,
@@ -9,9 +9,18 @@ import {
 
 import DashboardCard from "../components/Cards/DashboardCard";
 import MainContainer from "../components/Container/MainContainer";
+import CustomButton from "../components/Buttons/CustomButton";
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStackParamList } from "./RootStackParams";
+import { useAuthenticationEnforcement } from "../util/checkAuth";
+
+type IDashboard = StackNavigationProp<RootStackParamList, "Dashboard">;
 
 const Dashboard = () => {
-    const [user, setUser] = React.useState<string | null>("User");
+    const [user] = React.useState<string | null>("User");
+    const navigation = useNavigation<IDashboard>();
+
     return (
         <MainContainer>
             <View className="h-[55px] z-20 mt-8 flex flex-row justify-between items-center px-2">
@@ -29,16 +38,21 @@ const Dashboard = () => {
             </Text>
             <DashboardCard
                 cardTitle="Net Worth"
-                totalAmount={"$57,000.00"}
+                totalAmount="$57,000.00"
                 /*dateText="02-28-2023"*/
                 icon={<ChartBarIcon color="#FB5353" size={60} />}
             />
-
             <DashboardCard
                 cardTitle="Budget"
-                totalAmount={"$20,050.02"}
+                totalAmount="$20,050.02"
                 /*dateText="02-28-2023"*/
                 icon={<ChartPieIcon color="#FB5353" size={60} />}
+            />
+            <CustomButton
+                buttonText="Register"
+                buttonClassNames="w-full rounded-md p-3 bg-[#FB5353] flex justify-center items-center mt-5"
+                textClassNames="text-[#EFE3C8] text-[18px] font-semibold"
+                onPress={() => navigation.navigate("Plaid")}
             />
         </MainContainer>
     );

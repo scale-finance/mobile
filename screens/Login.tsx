@@ -1,7 +1,7 @@
 import axios from "axios";
 import React from "react";
 import Constants from "expo-constants";
-import { View, Text, ScrollView, Pressable, Image } from "react-native";
+import { View, Text, Pressable, Image } from "react-native";
 import { AtSymbolIcon, LockClosedIcon } from "react-native-heroicons/solid";
 
 import CustomButton from "../components/Buttons/CustomButton";
@@ -9,11 +9,12 @@ import KeyboardAvoidWrapper from "../components/Container/KeyboardAvoidWrapper";
 import MainContainer from "../components/Container/MainContainer";
 import CustomTextInput from "../components/InputText/CustomTextInput";
 
-import {useNavigation} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamList} from './RootStackParams';
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStackParamList } from "./RootStackParams";
+import { useAuthenticationEnforcement } from "../util/checkAuth";
 
-type loginScreenProp = StackNavigationProp<RootStackParamList, 'Login'>;
+type loginScreenProp = StackNavigationProp<RootStackParamList, "Login">;
 
 const Login = () => {
     const [email, setEMail] = React.useState<string | null>(null);
@@ -22,14 +23,14 @@ const Login = () => {
     const authenticateUser = () => {
         axios
             .post(`${Constants.manifest!.extra!.backendUri}/api/auth/login`, {
-                email: email,
-                password: password,
+                email,
+                password,
             })
             .then((response) => {
-                if(response.data.status == 200){
-                    navigation.navigate('Dashboard');
-                };
-                // TODO: 
+                if (response.data.status === 200) {
+                    navigation.navigate("Dashboard");
+                }
+                // TODO:
                 //else {display error message in a window}
             })
             .catch((err) => console.log(err.response.data));
@@ -45,6 +46,7 @@ const Login = () => {
     };
 
     const navigation = useNavigation<loginScreenProp>();
+    useAuthenticationEnforcement(navigation);
 
     return (
         <MainContainer>
@@ -56,24 +58,24 @@ const Login = () => {
                 <View className="flex flex-1 justify-center items-center pt-[10%] px-[25px]">
                     <Text className="text-3xl text-[#EFE3C8] text-md">Welcome to Scale</Text>
                     <Text className="text-1xl text-[#EFE3C8] text-md pt-[5%]">New here?</Text>
-                    <Pressable onPress={() => navigation.navigate('Register')}>
+                    <Pressable onPress={() => navigation.navigate("Register")}>
                         <Text className="text-1xl text-[#FB5353] text-md pb-[5%]">
                             Register here
                         </Text>
                     </Pressable>
-                    <View className="h-45px] w-full"></View>
+                    <View className="h-45px] w-full" />
                     <CustomTextInput
-                        icon={<AtSymbolIcon color={"#979797"} width={35} height={35} />}
+                        icon={<AtSymbolIcon color="#979797" width={35} height={35} />}
                         onChangeText={onUsernameChange}
                         label="Email"
-                        keyboardType={"email-address"}
+                        keyboardType="email-address"
                         placeholder="Enter your email"
                     />
                     <CustomTextInput
-                        icon={<LockClosedIcon color={"#979797"} width={35} height={35} />}
+                        icon={<LockClosedIcon color="#979797" width={35} height={35} />}
                         onChangeText={onPasswordChange}
                         label="Password"
-                        IsSecureText={true}
+                        IsSecureText
                         keyboardType="default"
                         placeholder="Enter your password"
                     />
@@ -91,7 +93,6 @@ const Login = () => {
             onPress={() => console.log(password)}
           />
           */}
-
                     <View className="flex w-full justify-end items-end pt-4">
                         <Pressable onPress={() => console.log("pressed forgot password")}>
                             <Text className="text-center text-gray-500 text-sm">

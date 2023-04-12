@@ -8,12 +8,11 @@ import KeyboardAvoidWrapper from "../components/Container/KeyboardAvoidWrapper";
 import MainContainer from "../components/Container/MainContainer";
 import CustomTextInput from "../components/InputText/CustomTextInput";
 
-import {useNavigation} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {RootStackParamList} from './RootStackParams';
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStackParamList } from "./RootStackParams";
 
-type registerScreenProp = StackNavigationProp<RootStackParamList, 'Register'>;
-
+type registerScreenProp = StackNavigationProp<RootStackParamList, "Register">;
 
 const Register = () => {
     const [username, setUsername] = React.useState<string | null>(null);
@@ -24,15 +23,15 @@ const Register = () => {
         axios
             .post(`${Constants.manifest!.extra!.backendUri}/api/auth/register`, {
                 email: username,
-                password: password,
+                password,
                 fullName: fullname,
             })
             .then((response) => {
                 //console.log(response.data)
-                if(response.data.status == 201){
-                    navigation.navigate('Plaid');
-                };
-                // TODO: 
+                if (response.data.status === 201) {
+                    navigation.navigate("Plaid");
+                }
+                // TODO:
                 //else {display error message in a window}
             })
             .catch((err) => console.log(err.response.data));
@@ -96,7 +95,7 @@ const Register = () => {
                     />
 
                     <View className="flex w-full justify-end items-end pt-4">
-                        <Pressable onPress={() => navigation.navigate('Login')}>
+                        <Pressable onPress={() => navigation.navigate("Login")}>
                             <Text className="text-center text-gray-500 text-sm text-[#EFE3C8]">
                                 Already have an account? Login here
                             </Text>

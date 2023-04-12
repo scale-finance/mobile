@@ -2,6 +2,7 @@
     "extends": ["universe/native"],
     "rules": {
         "import/namespace": [0],
+        "import/order": 0,
         "indent": ["error", 4],
         "quotes": ["error", "double"],
         "padding-line-between-statements": [
