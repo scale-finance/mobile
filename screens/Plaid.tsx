@@ -5,9 +5,15 @@ import React, { useEffect } from "react";
 import PlaidLink from "./PlaidLink";
 
 import MainContainer from "../components/Container/MainContainer";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStackParamList } from "./RootStackParams";
+import { useNavigation } from "@react-navigation/native";
+
+type plaidScreenProp = StackNavigationProp<RootStackParamList, "Plaid">;
 
 const Plaid = () => {
     const [linkToken, setLinkToken] = React.useState<string | "null">("linkToken");
+    const navigation = useNavigation<plaidScreenProp>();
 
     useEffect(() => {
         getLinkToken();
@@ -20,7 +26,7 @@ const Plaid = () => {
                 //console.log(response.data.data)
                 setLinkToken(response.data.data.link_token);
             })
-            .catch((err) => console.log(err.response.data));
+            .catch((err) => console.log(err?.response?.data));
     };
 
     const exchangePublicToken = (publicToken: string) => {
@@ -29,7 +35,11 @@ const Plaid = () => {
                 publicToken,
             })
             .then((response) => {
-                console.log(response.data.data);
+                if (response.data.status === 200) {
+                    console.log("success");
+
+                    navigation.navigate("Dashboard");
+                }
             })
             .catch((err) => console.log(err.response.data));
     };

@@ -21,20 +21,22 @@ const Login = () => {
     const [password, setPassword] = React.useState<string | null>(null);
 
     const authenticateUser = () => {
+        console.log(email, password);
         axios
             .post(`${Constants.manifest!.extra!.backendUri}/api/auth/login`, {
                 email,
                 password,
             })
             .then((response) => {
+                console.log(response.data.data);
+
                 if (response.data.status === 200) {
                     navigation.navigate("Dashboard");
+                } else {
+                    console.log(response.data.data);
                 }
-                // TODO:
-                //else {display error message in a window}
             })
             .catch((err) => console.log(err.response.data));
-        console.log("debugger");
     };
 
     const onUsernameChange = (email: string) => {

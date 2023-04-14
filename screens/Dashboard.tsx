@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, Text } from "react-native";
 import {
     ArrowDownLeftIcon,
@@ -13,13 +13,29 @@ import CustomButton from "../components/Buttons/CustomButton";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "./RootStackParams";
-import { useAuthenticationEnforcement } from "../util/checkAuth";
+import axios from "axios";
+import Constants from "expo-constants";
 
 type IDashboard = StackNavigationProp<RootStackParamList, "Dashboard">;
 
 const Dashboard = () => {
     const [user] = React.useState<string | null>("User");
+    const [balance, setBalance] = React.useState<string | null>(null);
     const navigation = useNavigation<IDashboard>();
+
+    useEffect(() => {
+        axios
+            .get(`${Constants.manifest!.extra!.backendUri}/api/v0/plaid/transactions/all`)
+            .then((response) => {
+                // format number to currency without using Intl
+                setBalance(
+                    `$${response.data.data.totalBalance
+                        .toFixed(2)
+                        .replace(/\d(?=(\d{3})+\.)/g, "$&,")}`
+                );
+            })
+            .catch((err) => console.log(err.response.data));
+    });
 
     return (
         <MainContainer>
@@ -38,7 +54,7 @@ const Dashboard = () => {
             </Text>
             <DashboardCard
                 cardTitle="Net Worth"
-                totalAmount="$57,000.00"
+                totalAmount={balance}
                 /*dateText="02-28-2023"*/
                 icon={<ChartBarIcon color="#FB5353" size={60} />}
             />
