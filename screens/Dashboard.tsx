@@ -50,19 +50,18 @@ const Dashboard = () => {
             </View>
             <View className="w-full bg-[#0C080C] h-[30%] rounded-[20px] absolute" />
             <Text className="text-white mt-[20px] mb-[20px] text-2xl text-bold ml-[20px]">
-                Hello, {user}
+                Welcome, {user}
             </Text>
             <DashboardCard
-                cardTitle="Net Worth"
+                cardTitle="Balance"
                 totalAmount={balance}
                 /*dateText="02-28-2023"*/
                 icon={<ChartBarIcon color="#FB5353" size={60} />}
             />
             <DashboardCard
-                cardTitle="Budget"
+                cardTitle="Transaction"
                 totalAmount="$20,050.02"
-                /*dateText="02-28-2023"*/
-                icon={<ChartPieIcon color="#FB5353" size={60} />}
+                dateText="02-28-2023"
             />
             <CustomButton
                 buttonText="Register"
