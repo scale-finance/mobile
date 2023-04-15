@@ -53,7 +53,7 @@ const Dashboard = () => {
                 Welcome, {user}
             </Text>
             <DashboardCard
-                cardTitle="Balance"
+                cardTitle="Account Balance"
                 totalAmount={balance}
                 /*dateText="02-28-2023"*/
                 icon={<ChartBarIcon color="#FB5353" size={60} />}
@@ -62,12 +62,6 @@ const Dashboard = () => {
                 cardTitle="Transaction"
                 totalAmount="$20,050.02"
                 dateText="02-28-2023"
-            />
-            <CustomButton
-                buttonText="Register"
-                buttonClassNames="w-full rounded-md p-3 bg-[#FB5353] flex justify-center items-center mt-5"
-                textClassNames="text-[#EFE3C8] text-[18px] font-semibold"
-                onPress={() => navigation.navigate("Plaid")}
             />
         </MainContainer>
     );
