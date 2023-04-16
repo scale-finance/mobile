@@ -38,14 +38,10 @@ const Transaction = () => {
                 setTransactionData( 
                     response.data.data.transactions
                 );
-                console.log(transactionData);
             })
             .catch((err) => console.log(err.response.data));
 
     });
-
-    console.log('🚀 ~ file: getTransactions ', transactionData);
-
 
     const renderItem = ({item}: {item:any}) => {
         return (
@@ -98,7 +94,7 @@ const Transaction = () => {
             <FlatList
                 data={transactionData}
                 renderItem={renderItem}
-                keyExtractor={item => item?.account_id}
+                keyExtractor={(item, index) => `${item.id}-${index}`}
                 maxToRenderPerBatch={5}
                 initialNumToRender={10}
                 style={{paddingTop: 10}}
