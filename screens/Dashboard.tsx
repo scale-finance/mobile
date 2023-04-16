@@ -54,7 +54,13 @@ const Dashboard = () => {
                     <Text className="text-white text-xl">Dashboard</Text>
                 </View>
                 <View className="w-[40px] h-[40px] bg-[#FB5353] justify-center items-center rounded-full">
-                    <UserIcon color="white" />
+                    <Pressable
+                        onPress={() => {
+                            navigation.navigate("Login");
+                            axios.get(`${Constants.manifest!.extra!.backendUri}/api/auth/logout`);
+                        }}>
+                        <UserIcon color="white" />
+                    </Pressable>
                 </View>
             </View>
             <View className="w-full bg-[#0C080C] h-[30%] rounded-[20px] absolute" />
