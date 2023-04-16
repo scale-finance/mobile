@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import {View, Text, FlatList, StyleSheet, Image} from 'react-native';
+import {View, Text, FlatList, StyleSheet, Image, Pressable} from 'react-native';
 import {
     ArrowDownLeftIcon,
     UserIcon,
@@ -52,18 +52,20 @@ const Dashboard = () => {
             <Text className="text-white mt-[20px] mb-[20px] text-2xl text-bold ml-[20px]">
                 Welcome, {user}
             </Text>
-            <DashboardCard
-                cardTitle="Account Balance"
-                totalAmount={balance}
-                /*dateText="02-28-2023"*/
-                icon={<ChartBarIcon color="#FB5353" size={60} />}
-            />
-            <CustomButton
+            <Pressable onPress={() => navigation.navigate("Transaction")}>
+                <DashboardCard
+                    cardTitle="Account Balance"
+                    totalAmount={balance}
+                    dateText="View all transactions"
+                    icon={<ChartBarIcon color="#FB5353" size={60} />}
+                />
+            </Pressable>
+            {/* <CustomButton
                 buttonText="View Transactions"
                 buttonClassNames="w-full rounded-md p-3 bg-[#818181] flex justify-center items-center mt-4"
                 textClassNames="text-[#fff] text-[18px] font-semibold"
                 onPress={() => navigation.navigate("Transaction")}
-            />
+            /> */}
         </MainContainer>
     );
 };
