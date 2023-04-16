@@ -22,7 +22,7 @@ const Transaction = () => {
     const [user] = React.useState<string | null>("User");
     const [accountNum] = React.useState<string | null>("0000");
     const [balance, setBalance] = React.useState<string | null>(null);
-    const [transactionData, setTransactionData] = React.useState<string | null>(null);
+    const [transactionData, setTransactionData] = React.useState(null);
     const navigation = useNavigation<IDashboard>();
 
     useEffect(() => {
@@ -36,13 +36,47 @@ const Transaction = () => {
                         .replace(/\d(?=(\d{3})+\.)/g, "$&,")}`
                 );
                 setTransactionData( 
-                    `$${response.data.data.transactions}`
+                    response.data.data.transactions
                 );
+                console.log(transactionData);
             })
             .catch((err) => console.log(err.response.data));
+
     });
 
-   
+    console.log('🚀 ~ file: getTransactions ', transactionData);
+
+
+    const renderItem = ({item}: {item:any}) => {
+        return (
+          <View style={styles.itemContainer}>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                width: '40%',
+              }}>
+              <View>
+                <Text style={styles.fontStyle}>Merchant</Text>
+                <Text style={styles.text}>{item.merchant_name ?? 'Unknown'}</Text>
+              </View>
+            </View>
+            <View style={styles.textView}>
+              <Text style={styles.fontStyle}>Payment Mode</Text>
+              <Text style={styles.text}>{item.payment_channel}</Text>
+            </View>
+            <View
+              style={{
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'flex-end',
+                width: '30%',
+              }}>
+              <Text style={styles.text}>{item.amount}</Text>
+            </View>
+          </View>
+        );
+      };
     
     return (
         <MainContainer>
@@ -59,12 +93,18 @@ const Transaction = () => {
             <Text className="text-white mt-[20px] mb-[20px] text-2xl text-bold ml-[20px]">
                 Account Balance - {balance}
             </Text>
-            <DashboardCard
-                cardTitle="Account Balance"
-                totalAmount={balance}
-                /*dateText="02-28-2023"*/
-                icon={<ChartBarIcon color="#FB5353" size={60} />}
+            
+            <View style={{marginTop: 10}}>
+            <FlatList
+                data={transactionData}
+                renderItem={renderItem}
+                keyExtractor={item => item?.account_id}
+                maxToRenderPerBatch={5}
+                initialNumToRender={10}
+                style={{paddingTop: 10}}
+                showsVerticalScrollIndicator={false}
             />
+            </View>
         </MainContainer>
     );
 };
