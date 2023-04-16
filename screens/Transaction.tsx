@@ -18,9 +18,11 @@ import Constants from "expo-constants";
 
 type IDashboard = StackNavigationProp<RootStackParamList, "Dashboard">;
 
-const Dashboard = () => {
+const Transaction = () => {
     const [user] = React.useState<string | null>("User");
+    const [accountNum] = React.useState<string | null>("0000");
     const [balance, setBalance] = React.useState<string | null>(null);
+    const [transactionData, setTransactionData] = React.useState<string | null>(null);
     const navigation = useNavigation<IDashboard>();
 
     useEffect(() => {
@@ -33,16 +35,21 @@ const Dashboard = () => {
                         .toFixed(2)
                         .replace(/\d(?=(\d{3})+\.)/g, "$&,")}`
                 );
+                setTransactionData( 
+                    `$${response.data.data.transactions}`
+                );
             })
             .catch((err) => console.log(err.response.data));
     });
 
+   
+    
     return (
         <MainContainer>
             <View className="h-[55px] z-20 mt-8 flex flex-row justify-between items-center px-2">
                 <View className="flex flex-row gap-4 justify-center items-center">
                     <ArrowDownLeftIcon color="white" />
-                    <Text className="text-white text-xl">Dashboard</Text>
+                    <Text className="text-white text-xl">Transaction</Text>
                 </View>
                 <View className="w-[40px] h-[40px] bg-[#FB5353] justify-center items-center rounded-full">
                     <UserIcon color="white" />
@@ -50,7 +57,7 @@ const Dashboard = () => {
             </View>
             <View className="w-full bg-[#0C080C] h-[30%] rounded-[20px] absolute" />
             <Text className="text-white mt-[20px] mb-[20px] text-2xl text-bold ml-[20px]">
-                Welcome, {user}
+                Account Balance - {balance}
             </Text>
             <DashboardCard
                 cardTitle="Account Balance"
@@ -58,14 +65,37 @@ const Dashboard = () => {
                 /*dateText="02-28-2023"*/
                 icon={<ChartBarIcon color="#FB5353" size={60} />}
             />
-            <CustomButton
-                buttonText="View Transactions"
-                buttonClassNames="w-full rounded-md p-3 bg-[#818181] flex justify-center items-center mt-4"
-                textClassNames="text-[#EFE3C8] text-[18px] font-semibold"
-                onPress={() => navigation.navigate("Transaction")}
-            />
         </MainContainer>
     );
 };
 
-export default Dashboard;
+const styles = StyleSheet.create({
+    itemContainer: {
+      flexDirection: 'row',
+      marginVertical: 5,
+      backgroundColor: '#1E1E2D',
+      borderRadius: 10,
+      height: 100,
+    },
+    textView: {
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    text: {
+      color: '#fff',
+      fontSize: 10,
+    },
+    icon: {
+      width: 20,
+      height: 20,
+      marginBottom: 5,
+    },
+  
+    fontStyle: {
+      color: '#fff',
+      fontSize: 12,
+    },
+  });
+
+export default Transaction;
