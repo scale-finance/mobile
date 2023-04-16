@@ -50,14 +50,13 @@ export default function Accounts() {
                             cardTitle="See all transactions"
                             totalAmount={totalBalance}
                             dateText="View all transactions"
-                            icon={<BuildingLibraryIcon color="#FB5353" size={60} />}
                         />
                     </Pressable>
                 </View>
 
                 {Object.keys(banks)?.map((bank: any) => {
                     return (
-                        <View style={{ marginBottom: 20 }}>
+                        <View key={bank} style={{ marginBottom: 20 }}>
                             <Text
                                 className="text-white text-xl ml-[20px]"
                                 style={{ fontWeight: "bold" }}>
