@@ -43,6 +43,7 @@ const Transaction = () => {
 
     });
 
+
     const renderItem = ({item}: {item:any}) => {
         return (
           <View style={styles.itemContainer}>
@@ -94,7 +95,7 @@ const Transaction = () => {
             <FlatList
                 data={transactionData}
                 renderItem={renderItem}
-                keyExtractor={(item, index) => `${item.id}-${index}`}
+                keyExtractor={(item, index) => `${item?.account_id}-${index}`}
                 maxToRenderPerBatch={5}
                 initialNumToRender={10}
                 style={{paddingTop: 10}}
