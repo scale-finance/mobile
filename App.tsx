@@ -10,6 +10,7 @@ import { TailwindProvider } from "tailwindcss-react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator, CardStyleInterpolators } from "@react-navigation/stack";
 import { RootStackParamList } from "./screens/RootStackParams";
+import Accounts from "./screens/Accounts";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -24,7 +25,16 @@ function MyStack() {
                     options={{ headerShown: false }}
                 />
                 <Stack.Screen name="Plaid" component={Plaid} options={{ headerShown: false }} />
-                <Stack.Screen name="Transaction" component={Transaction} options={{ headerShown: false }} />
+                <Stack.Screen
+                    name="Transaction"
+                    component={Transaction}
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen
+                    name="Accounts"
+                    component={Accounts}
+                    options={{ headerShown: false }}
+                />
             </Stack.Group>
             <Stack.Group
                 screenOptions={{

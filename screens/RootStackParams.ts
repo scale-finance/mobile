@@ -4,4 +4,5 @@ export type RootStackParamList = {
     Register: undefined;
     Plaid: undefined;
     Transaction: undefined;
+    Accounts: undefined;
 };

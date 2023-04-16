@@ -1,82 +1,71 @@
 import React, { useEffect } from "react";
-import {View, Text, FlatList, StyleSheet, Image} from 'react-native';
-import {
-    ArrowDownLeftIcon,
-    UserIcon,
-    ChartBarIcon,
-    ChartPieIcon,
-} from "react-native-heroicons/solid";
+import { View, Text, FlatList, StyleSheet } from "react-native";
+import { ArrowDownLeftIcon, UserIcon } from "react-native-heroicons/solid";
 
-import DashboardCard from "../components/Cards/DashboardCard";
 import MainContainer from "../components/Container/MainContainer";
-import CustomButton from "../components/Buttons/CustomButton";
-import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "./RootStackParams";
-import axios from "axios";
-import Constants from "expo-constants";
+import { useAtom } from "jotai";
+import { banksAtom, selectedAccountAtom, transactionsAtom } from "./Dashboard";
 
 type IDashboard = StackNavigationProp<RootStackParamList, "Dashboard">;
 
 const Transaction = () => {
-    const [user] = React.useState<string | null>("User");
-    const [accountNum] = React.useState<string | null>("0000");
-    const [balance, setBalance] = React.useState<string | null>(null);
-    const [transactionData, setTransactionData] = React.useState(null);
-    const navigation = useNavigation<IDashboard>();
+    const [banks] = useAtom(banksAtom);
+    const [selectedAccount] = useAtom(selectedAccountAtom);
+    const [transactions] = useAtom(transactionsAtom);
 
-    useEffect(() => {
-        axios
-            .get(`${Constants.manifest!.extra!.backendUri}/api/v0/plaid/transactions/all`)
-            .then((response) => {
-                // format number to currency without using Intl
-                setBalance(
-                    `$${response.data.data.totalBalance
-                        .toFixed(2)
-                        .replace(/\d(?=(\d{3})+\.)/g, "$&,")}`
-                );
-                setTransactionData( 
-                    response.data.data.transactions
-                );
-            })
-            .catch((err) => console.log(err.response.data));
+    let accountData;
 
-    });
+    if (selectedAccount !== "all") {
+        const [bank, account] = selectedAccount!.split("-");
+        console.log(selectedAccount, bank, account);
+        accountData = banks[bank].accounts[account];
+    } else {
+        accountData = transactions;
+    }
 
+    const balanceNum = accountData?.totalBalance ?? accountData.balance;
 
-    const renderItem = ({item}: {item:any}) => {
+    const balance = balanceNum
+        ? `$${balanceNum.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,")}`
+        : "$--.--";
+
+    const accountName = accountData?.name ?? "All Accounts";
+
+    const renderItem = ({ item }: { item: any }) => {
         return (
-          <View style={styles.itemContainer}>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                width: '40%',
-                paddingLeft: 20,
-              }}>
-              <View>
-                <Text style={styles.fontStyle}>Merchant</Text>
-                <Text style={styles.text}>{item.merchant_name ?? 'Unknown'}</Text>
-              </View>
+            <View style={styles.itemContainer}>
+                <View
+                    style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        width: "40%",
+                        paddingLeft: 20,
+                    }}>
+                    <View>
+                        <Text style={styles.fontStyle}>Merchant</Text>
+                        <Text style={styles.text}>{item.merchant_name ?? "Unknown"}</Text>
+                    </View>
+                </View>
+                <View style={styles.textView}>
+                    <Text style={styles.fontStyle}>Payment Mode</Text>
+                    <Text style={styles.text}>{item.payment_channel}</Text>
+                </View>
+                <View
+                    style={{
+                        flexDirection: "column",
+                        justifyContent: "center",
+                        alignItems: "flex-end",
+                        width: "30%",
+                    }}>
+                    <Text style={styles.fontStyle}>Amount</Text>
+                    <Text style={styles.text}>{item.amount}</Text>
+                </View>
             </View>
-            <View style={styles.textView}>
-              <Text style={styles.fontStyle}>Payment Mode</Text>
-              <Text style={styles.text}>{item.payment_channel}</Text>
-            </View>
-            <View
-              style={{
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'flex-end',
-                width: '30%',
-              }}>
-              <Text style={styles.fontStyle}>Amount</Text>
-              <Text style={styles.text}>{item.amount}</Text>
-            </View>
-          </View>
         );
-      };
-    
+    };
+
     return (
         <MainContainer>
             <View className="h-[55px] z-20 mt-8 flex flex-row justify-between items-center px-2">
@@ -90,19 +79,19 @@ const Transaction = () => {
             </View>
             <View className="w-full bg-[#0C080C] h-[30%] rounded-[20px] absolute" />
             <Text className="text-white mt-[20px] mb-[20px] text-2xl text-bold ml-[20px]">
-                Account Balance - {balance}
+                {accountName} - {balance}
             </Text>
-            
-            <View style={{marginTop: 10}}>
-            <FlatList
-                data={transactionData}
-                renderItem={renderItem}
-                keyExtractor={(item, index) => `${item?.account_id}-${index}`}
-                maxToRenderPerBatch={5}
-                initialNumToRender={10}
-                style={{paddingTop: 10}}
-                showsVerticalScrollIndicator={false}
-            />
+
+            <View style={{ marginTop: 10 }}>
+                <FlatList
+                    data={accountData.transactions}
+                    renderItem={renderItem}
+                    keyExtractor={(item, index) => `${item?.account_id}-${index}`}
+                    maxToRenderPerBatch={5}
+                    initialNumToRender={10}
+                    style={{ paddingTop: 10 }}
+                    showsVerticalScrollIndicator={false}
+                />
             </View>
         </MainContainer>
     );
@@ -110,31 +99,31 @@ const Transaction = () => {
 
 const styles = StyleSheet.create({
     itemContainer: {
-      flexDirection: 'row',
-      marginVertical: 5,
-      backgroundColor: '#818181',
-      borderRadius: 10,
-      height: 100,
+        flexDirection: "row",
+        marginVertical: 5,
+        backgroundColor: "#818181",
+        borderRadius: 10,
+        height: 100,
     },
     textView: {
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
     },
     text: {
-      color: '#fff',
-      fontSize: 20,
+        color: "#fff",
+        fontSize: 20,
     },
     icon: {
-      width: 20,
-      height: 20,
-      marginBottom: 5,
+        width: 20,
+        height: 20,
+        marginBottom: 5,
     },
-  
+
     fontStyle: {
-      color: '#EFE3C8',
-      fontSize: 12,
+        color: "#EFE3C8",
+        fontSize: 12,
     },
-  });
+});
 
 export default Transaction;
