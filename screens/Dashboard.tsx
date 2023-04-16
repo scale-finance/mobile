@@ -61,7 +61,7 @@ const Dashboard = () => {
             <CustomButton
                 buttonText="View Transactions"
                 buttonClassNames="w-full rounded-md p-3 bg-[#818181] flex justify-center items-center mt-4"
-                textClassNames="text-[#EFE3C8] text-[18px] font-semibold"
+                textClassNames="text-[#fff] text-[18px] font-semibold"
                 onPress={() => navigation.navigate("Transaction")}
             />
         </MainContainer>

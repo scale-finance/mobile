@@ -52,6 +52,7 @@ const Transaction = () => {
                 flexDirection: 'row',
                 alignItems: 'center',
                 width: '40%',
+                paddingLeft: 20,
               }}>
               <View>
                 <Text style={styles.fontStyle}>Merchant</Text>
@@ -69,6 +70,7 @@ const Transaction = () => {
                 alignItems: 'flex-end',
                 width: '30%',
               }}>
+              <Text style={styles.fontStyle}>Amount</Text>
               <Text style={styles.text}>{item.amount}</Text>
             </View>
           </View>
@@ -110,7 +112,7 @@ const styles = StyleSheet.create({
     itemContainer: {
       flexDirection: 'row',
       marginVertical: 5,
-      backgroundColor: '#1E1E2D',
+      backgroundColor: '#818181',
       borderRadius: 10,
       height: 100,
     },
@@ -121,7 +123,7 @@ const styles = StyleSheet.create({
     },
     text: {
       color: '#fff',
-      fontSize: 10,
+      fontSize: 20,
     },
     icon: {
       width: 20,
@@ -130,7 +132,7 @@ const styles = StyleSheet.create({
     },
   
     fontStyle: {
-      color: '#fff',
+      color: '#EFE3C8',
       fontSize: 12,
     },
   });
